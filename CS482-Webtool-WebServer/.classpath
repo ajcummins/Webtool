@@ -2,5 +2,59 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry exported="true" kind="lib" path="jetty-continuation-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="javax.servlet.jsp.jstl-1.2.0.v201105211821.jar"/>
+	<classpathentry exported="true" kind="lib" path="javax.servlet.jsp-2.2.0.v201112011158.jar"/>
+	<classpathentry exported="true" kind="lib" path="javax.el-2.2.0.v201303151357.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-deploy-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-security-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-plus-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-servlet-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-xml-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-jaas-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-webapp-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-rewrite-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-io-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-client-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-proxy-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-annotations-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-server-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="com.sun.el-2.2.0.v201303151357.jar"/>
+	<classpathentry exported="true" kind="lib" path="org.apache.taglibs.standard.glassfish-1.2.0.v201112081803.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-http-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-util-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="org.apache.jasper.glassfish-2.2.2.v201112011158.jar"/>
+	<classpathentry exported="true" kind="lib" path="org.eclipse.jdt.core-3.8.2.v20130121.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-jmx-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="servlet-api-3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-jndi-9.0.5.v20130815.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-servlets-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/com.sun.el-2.2.0.v201303151357.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/javax.el-2.2.0.v201303151357.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/javax.servlet.jsp.jstl-1.2.0.v201105211821.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/javax.servlet.jsp-2.2.0.v201112011158.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-annotations-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-client-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-continuation-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-deploy-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-http-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-io-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-jaas-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-jmx-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-jndi-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-plus-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-proxy-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-rewrite-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-security-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-server-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-servlet-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-servlets-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-util-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-webapp-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/jetty-xml-9.0.5.v20130815.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/org.apache.jasper.glassfish-2.2.2.v201112011158.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/org.apache.taglibs.standard.glassfish-1.2.0.v201112081803.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/org.eclipse.jdt.core-3.8.2.v20130121.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-WebServer/lib/servlet-api-3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
