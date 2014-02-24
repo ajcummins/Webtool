@@ -12,7 +12,10 @@
 		<servlet-class>edu.ycp.cs481.linkup.ui.servlet.UserProfileServlet</servlet-class>
 	</servlet> -->
 	
-	
+	<servlet>
+		<servlet-name>Webtool</servlet-name>
+		<servlet-class>edu.ycp.cs482.webtool.ui.servlet.WebtoolServlet</servlet-class>
+	</servlet>
 	
 
 	<!-- Servlet-mapping -->
@@ -21,7 +24,10 @@
 		<url-pattern>/profile/*</url-pattern>
 	</servlet-mapping>-->
 	
-
+	<servlet-mapping>
+		<servlet-name>Webtool</servlet-name>
+		<url-pattern>/webtool/*</url-pattern>
+	</servlet-mapping>
 	
 
 	<!-- Use the /index servlet as the welcome file -->

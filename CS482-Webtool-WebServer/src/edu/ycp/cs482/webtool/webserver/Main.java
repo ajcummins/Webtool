@@ -8,8 +8,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		
-		
-		
+
 		// Create an embedded Jetty server on port 8080
 		Server server = new Server(new QueuedThreadPool(20));
 		
@@ -38,5 +37,6 @@ public class Main {
 		// And start it up
 		server.start();
 		server.join();
+		
 	}
 }
