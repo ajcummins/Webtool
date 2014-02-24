@@ -2,14 +2,25 @@
 <html>
 	<script type="text/javascript">
 			function addTextRegion(){
-				document.getElementById("tmp").innerHTML+="<textarea>";
-				//document.getElementById("tmp").innerHTML+="</textarea>";
+				//document.getElementById("tmp").innerHTML+="<p>";
+				//document.getElementById("tmp").innerHTML+="</p>";
+				document.getElementById("tmp").innerHTML+= document.getElementById("temptext0").value;
+				document.getElementById("tmp").innerHTML+="<br>";
+				
+				resetAndCloseDiv();
 			}
 			function picBox(){
 				var index = document.getElementById('selection').value;  
-				if(index==2){
+				document.getElementById("picEntry").innerHTML="";
+				if(index==1){
+					document.getElementById("picEntry").innerHTML+="<textarea id=temptext0>";
+					document.getElementById("picEntry").innerHTML+="<br>";
+					
+					document.getElementById("picEntry").innerHTML+="<button type=button onclick=addTextRegion()>Done</button>"
+				}
+				else if(index==2){
 					document.getElementById("picEntry").innerHTML+="<form name=Upload enctype=multipart/form-data method=post>"
-						document.getElementById("picEntry").innerHTML+="Filename: <INPUT type=file id=submit>"
+					document.getElementById("picEntry").innerHTML+="Filename: <INPUT type=file id=submit>"
 						//document.getElementById("picEntry").innerHTML+="<INPUT type="button" id="send" value="Upload">"
 					document.getElementById("picEntry").innerHTML+="</form>";
 					document.getElementById("picEntry").innerHTML+="<p>Or Enter URL of image: <p><textarea id=test0>";
@@ -33,7 +44,12 @@
 			}
 			function addImgToPage(){
 				document.getElementById("tmp").innerHTML+="<img src="+ document.getElementById("imgtest").src +" height="+document.getElementById("imgtest").height+" width="+document.getElementById("imgtest").width+">";
+				document.getElementById("tmp").innerHTML+="<br>";
+				resetAndCloseDiv();
 			}
+			/*function addTextRegionToPage(){
+			
+			}*/
 			function updateHWImg(){
 				document.getElementById("imgtest").height = document.getElementById("h").value;
 				document.getElementById("imgtest").width = document.getElementById("w").value;
@@ -42,7 +58,7 @@
 				//document.getElementById("tmp").write(document.getElementById("tmp").innerHTML);
 				//alert(document.getElementById("test0").value);
 			}
-			function getValue(e){
+			/*function getValue(e){
 				var index = document.getElementById('selection').value;  
 				//var index = e.value;
 				alert("value="+index);  
@@ -59,12 +75,13 @@
 					document.getElementById('selection').value = 0;
 				}
 				
-			}
+			}*/
 			function resetAndCloseDiv(){
-			
+				document.getElementById('light').style.display='none';
+				document.getElementById('fade').style.display='none'
+				document.getElementById("picEntry").innerHTML="";
+				document.getElementById('selection').value = 0;
 			}
-			
-			<!--document.write("<p>This is a paragraph</p>");-->
 		</script>
 		<style>
     .black_overlay{
@@ -103,14 +120,11 @@
 
 			<div id="menu" style="background-color:#BBBBBB;height:inherit;width:inherit;">
 				<b>Menu</b>
-				HTML
-				CSS
-				JavaScript
 			</div>
 
 			<div id="content" style="background-color:#EEEEEE;height:inherit;width:inherit;float:middle;">
 				<table id="tmp">
-					<p><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">Insert here</a></p>
+					
 					
 					<div id="light" class="white_content">
 						<select id="selection" onchange="picBox()"> 
@@ -119,17 +133,17 @@
 						  <option value="2">Picture</option>
 						</select><br>
 						
-						<div id="picEntry">
-							
-						</div>
-						<br>This is the lightbox content. <br>
-						<a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a>
+						<div id="picEntry"></div>
+						<br>
+						<a href="javascript:void(0)" onclick = resetAndCloseDiv()>Close</a>
 					</div>
+					
 					<div id="fade" class="black_overlay"></div>
 				</table>
-				<button type="button" onclick="getValue()">Add Section</button>
-				<button type="button" onclick="SaveTextRegion()">Save</button>
-			Content goes here</div>
+				<p><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">Insert here</a></p>
+				<!--button type="button" onclick="getValue()">Add Section</button-->
+				<button type="button" onclick="SaveTextRegion()">Preview Page</button>
+			</div>
 
 
 		</div>
