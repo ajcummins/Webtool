@@ -13,7 +13,7 @@ public class Main {
 		Server server = new Server(new QueuedThreadPool(20));
 		
 		ServerConnector connector = new ServerConnector(server);
-		connector.setPort(8080);
+		connector.setPort(8081);
 		
 		server.addConnector(connector);
 
@@ -26,8 +26,8 @@ public class Main {
 
 		// If your app isn't packaged into a WAR, you can do this instead
 		WebAppContext altHandler = new WebAppContext();
-		altHandler.setResourceBase("../../UI/UI/war");
-		altHandler.setDescriptor("../../UI/UI/war/WEB-INF/web.xml");
+		altHandler.setResourceBase("../CS482-Webtool-UI/war");
+		//altHandler.setDescriptor("../CS482-Webtool-UI/war/WEB-INF/web.xml");
 		altHandler.setContextPath("/");
 		altHandler.setParentLoaderPriority(true);
 
