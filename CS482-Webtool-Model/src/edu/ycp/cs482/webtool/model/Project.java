@@ -8,10 +8,12 @@ public class Project
 {
 	private int projectID;
 	private String projectName;
+	private ArrayList<Integer> pageIDList;
 	
 	public Project(String inProjectName)
 	{
 		projectName = inProjectName;
+		setPageIDList(new ArrayList<Integer>());
 	}
 	
 	public int getProjectID() {
@@ -29,6 +31,31 @@ public class Project
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
+
+	public ArrayList<Integer> getPageIDList() {
+		return pageIDList;
+	}
+
+	public void setPageIDList(ArrayList<Integer> pageIDList) {
+		this.pageIDList = pageIDList;
+	}
+	
+	public void addPageToList(int inPageID)
+	{
+		pageIDList.add(inPageID);
+	}
+	
+	public void removePageIDFromList(int inPageID)
+	{
+		for(int i = 0; i < pageIDList.size(); i++)
+		{
+			if(pageIDList.get(i) == inPageID)
+			{
+				pageIDList.remove(i);
+			}
+		}
+	}
+	
 	
 	
 }

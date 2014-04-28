@@ -8,6 +8,7 @@ public class User
 {
 	private String username;
 	private String password;
+	// Project ID would corrispond to an incrementing field in the database Unique per project
 	private ArrayList<Integer> projectIDList;
 	
 	public User(String inUsername, String inPassword)
@@ -41,6 +42,22 @@ public class User
 	public ArrayList<Integer> getProjectNameList()
 	{
 		return projectIDList;
+	}
+	
+	public void removeID(int inID)
+	{
+		for(int i = 0 ; i < projectIDList.size(); i++)
+		{
+			if(inID == projectIDList.get(i))
+			{
+				projectIDList.remove(i);
+			}
+		}
+	}
+	
+	public void addID(int inID)
+	{
+		projectIDList.add(inID);
 	}
 	
 	
