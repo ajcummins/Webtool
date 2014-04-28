@@ -28,6 +28,7 @@ public class Main {
 		WebAppContext altHandler = new WebAppContext();
 		altHandler.setResourceBase("../CS482-Webtool-UI/war");
 		//altHandler.setDescriptor("../CS482-Webtool-UI/war/WEB-INF/web.xml");
+		//altHandler.setContextPath("/HostFreak.com");
 		altHandler.setContextPath("/");
 		altHandler.setParentLoaderPriority(true);
 
