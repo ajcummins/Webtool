@@ -14,21 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>war/_view/WebTool_CSS.css</name>
-			<type>1</type>
-			<location>C:/Users/Mr_E/Desktop/WebTool_CSS.css</location>
-		</link>
-		<link>
-			<name>war/_view/WebTool_JS.js</name>
-			<type>1</type>
-			<location>C:/Users/Mr_E/Desktop/WebTool_JS.js</location>
-		</link>
-		<link>
-			<name>war/_view/webtool.jsp</name>
-			<type>1</type>
-			<location>C:/Users/Mr_E/Desktop/WebTool_UI.html</location>
-		</link>
-	</linkedResources>
 </projectDescription>
