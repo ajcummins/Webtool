@@ -5,7 +5,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/CS482-Webtool-Controllers"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CS482-Webtool-Model"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CS482-Webtool-Persistence"/>
-	<classpathentry exported="true" kind="lib" path="/CS481-Linkup-WebServer/lib/servlet-api-3.0.jar"/>
-	<classpathentry kind="lib" path="war/_view/WebToolJS.js"/>
+	<classpathentry kind="lib" path="/CS482-Webtool-WebServer/lib/servlet-api-3.0.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
