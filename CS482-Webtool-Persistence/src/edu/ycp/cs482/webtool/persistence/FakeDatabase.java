@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import edu.ycp.cs482.webtool.model.User;
 import edu.ycp.cs482.webtool.persistence.IDatabase;
 
-public class FakeDatabase implements IDatabase {
+public class FakeDatabase /*implements IDatabase*/ {
 
 	private ArrayList<User> allUsers;
 	
@@ -20,13 +20,13 @@ public class FakeDatabase implements IDatabase {
 		allUsers.add(ajcummins);
 	}
 	
-	@Override
+//	@Override
 	public void storeWebpage() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+//	@Override
 	public User authenticateUser(String inUser, String inPass) {
 		for(int i = 0; i < allUsers.size(); i++)
 		{
@@ -43,7 +43,7 @@ public class FakeDatabase implements IDatabase {
 		return null;
 	}
 
-	@Override
+//	@Override
 	public void createUser(User inUser) {
 		allUsers.add(inUser);		
 	}

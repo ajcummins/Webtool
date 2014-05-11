@@ -13,6 +13,6 @@ public interface IDatabase {
 
 	public User authenticateUser(String inUser, String inPass);
 
-	public void createUser(User inUser);
+	public Boolean createUser(User inUser);
 	
 }

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs482.webtool.persistence.DatabaseProvider;
+import edu.ycp.cs482.webtool.persistence.DerbyDatabase;
 import edu.ycp.cs482.webtool.persistence.FakeDatabase;
 
 
@@ -19,7 +20,7 @@ public class DatabaseInitListener implements ServletContextListener{
 	@Override
 	public void contextInitialized(ServletContextEvent e) {
 		// Webapp is starting
-		DatabaseProvider.setInstance(new FakeDatabase());
+		DatabaseProvider.setInstance(new DerbyDatabase());
 		System.out.println("Initialized database!");
 	}
 	

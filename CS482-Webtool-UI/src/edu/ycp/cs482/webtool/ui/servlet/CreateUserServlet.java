@@ -31,13 +31,13 @@ public class CreateUserServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//FIXME: add post
-		username = (String) req.getAttribute("Username");
-		pass = (String) req.getAttribute("Password");
-		confirmPass = (String) req.getAttribute("ConfirmPassword");
+		username = (String) req.getParameter("username");
+		pass = (String) req.getParameter("password");
+		confirmPass = (String) req.getParameter("confirmPassword");
 		
-		System.out.println("Username = " + username);
-		System.out.println("Password = " + pass);
-		System.out.println("Confirm Password = " + confirmPass);
+		System.out.println("username = " + username);
+		System.out.println("password = " + pass);
+		System.out.println("confirm Password = " + confirmPass);
 		
 		
 		// Check for empty fields EXCEPT FOR PROF PASSWORD
@@ -53,13 +53,22 @@ public class CreateUserServlet extends HttpServlet{
 				User newUser = new User(username,pass);
 
 
-				controller.createUser(newUser);
-				// Add User to session
-				HttpSession session = req.getSession();
-				session.setAttribute("User", newUser);
-
-				//  Redirect to My Course List... 
-				resp.sendRedirect(req.getContextPath()+"/MyProjects");
+				boolean success = controller.createUser(newUser);
+				
+				if(success)
+				{
+					// Add User to session
+					HttpSession session = req.getSession();
+					session.setAttribute("User", newUser);
+	
+					//  Redirect to My Course List... 
+					resp.sendRedirect(req.getContextPath()+"/MyProjects");
+				}
+				else
+				{
+					req.setAttribute("result", "Error Adding User to Database");
+					this.doGet(req, resp);
+				}
 
 			}
 			else

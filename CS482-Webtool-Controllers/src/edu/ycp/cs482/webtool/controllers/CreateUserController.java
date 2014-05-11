@@ -5,9 +5,9 @@ import edu.ycp.cs482.webtool.persistence.DatabaseProvider;
 import edu.ycp.cs482.webtool.persistence.IDatabase;
 
 public class CreateUserController {
-	public void createUser(User inUser)
+	public boolean createUser(User inUser)
 	{
 		IDatabase db = DatabaseProvider.getInstance();
-		db.createUser(inUser);
+		return db.createUser(inUser);
 	}
 }

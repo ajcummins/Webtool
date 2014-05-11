@@ -41,19 +41,19 @@
 	
 	<servlet-mapping>
 		<servlet-name>Webtool</servlet-name>
-		<url-pattern>/webtool/*</url-pattern>
+		<url-pattern>/Webtool/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Index</servlet-name>
-		<url-pattern>/home/*</url-pattern>
+		<url-pattern>/Home/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Login</servlet-name>
-		<url-pattern>/login/*</url-pattern>
+		<url-pattern>/Login/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CreateUser</servlet-name>
-		<url-pattern>/createaccount/*</url-pattern>
+		<url-pattern>/CreateAccount/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>MyProjects</servlet-name>

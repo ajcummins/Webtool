@@ -6,18 +6,23 @@ import java.util.ArrayList;
 
 public class User 
 {
+	private int userID;
 	private String username;
 	private String password;
 	// Project ID would corrispond to an incrementing field in the database Unique per project
-	private ArrayList<Integer> projectIDList;
+	//private ArrayList<Integer> projectIDList;
 	
 	public User(String inUsername, String inPassword)
 	{
 		username = inUsername;
 		password = inPassword;
-		projectIDList = new ArrayList<Integer>();
+		//projectIDList = new ArrayList<Integer>();
 	}
 	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setUsername(String inUsername)
 	{
 		username = inUsername;
@@ -38,7 +43,7 @@ public class User
 	{
 		return password;
 	}
-	
+	/*
 	public ArrayList<Integer> getProjectNameList()
 	{
 		return projectIDList;
@@ -58,6 +63,14 @@ public class User
 	public void addID(int inID)
 	{
 		projectIDList.add(inID);
+	}
+	*/
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 	
 	
