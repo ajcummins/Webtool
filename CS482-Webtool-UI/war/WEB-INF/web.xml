@@ -24,6 +24,14 @@
 		<servlet-name>Login</servlet-name>
 		<servlet-class>edu.ycp.cs482.webtool.ui.servlet.LoginServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>CreateUser</servlet-name>
+		<servlet-class>edu.ycp.cs482.webtool.ui.servlet.CreateUserServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>MyProjects</servlet-name>
+		<servlet-class>edu.ycp.cs482.webtool.ui.servlet.MyProjectListServlet</servlet-class>
+	</servlet>
 
 	<!-- Servlet-mapping -->
 	<!--<servlet-mapping>
@@ -42,6 +50,14 @@
 	<servlet-mapping>
 		<servlet-name>Login</servlet-name>
 		<url-pattern>/login/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CreateUser</servlet-name>
+		<url-pattern>/createaccount/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MyProjects</servlet-name>
+		<url-pattern>/MyProjects/*</url-pattern>
 	</servlet-mapping>
 	
 	

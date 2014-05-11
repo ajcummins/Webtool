@@ -36,17 +36,17 @@ public class LoginServlet extends HttpServlet{
 		{		
 			// Use Login Controller to check their credentials
 			LoginController controller = new LoginController();
-			User thisUser = controller.authenticateUser(userString, passString);
+			User currentUser = controller.authenticateUser(userString, passString);
 
-			if(thisUser != null)
+			if(currentUser != null)
 			{
 				// Login Successful
 				// Store User in Session
 				HttpSession session = req.getSession();
-				session.setAttribute("CurrentUser", thisUser);
+				session.setAttribute("CurrentUser", currentUser);
 
 				//  Redirect to My Course List... 
-				resp.sendRedirect(req.getContextPath()+"/MyCourseList");
+				resp.sendRedirect(req.getContextPath()+"/MyProjects");
 
 			}
 			else

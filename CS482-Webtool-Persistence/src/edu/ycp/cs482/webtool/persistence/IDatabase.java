@@ -12,5 +12,7 @@ public interface IDatabase {
 	public void storeWebpage() throws Exception;
 
 	public User authenticateUser(String inUser, String inPass);
+
+	public void createUser(User inUser);
 	
 }

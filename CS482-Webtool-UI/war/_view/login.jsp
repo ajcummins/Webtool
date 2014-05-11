@@ -10,7 +10,7 @@
 	<body>
 		<h1>Welcome To HostFreak.com</h1>
 		<h2>Please Sign in:</h2>
-		<form action="${pageContext.servletContext.contextPath}/Login" method="post">
+		<form action="${pageContext.servletContext.contextPath}/login" method="post">
 			<table>
 				<tr>
 					<th>UserName: </th>
@@ -22,7 +22,7 @@
 				</tr>
 			</table>
 			<input type="submit" value="Submit"></input>
-			<button type="button">Create Account</button>
+			<a href="${pageContext.servletContext.contextPath}/createaccount">Create Account</a>
 			<c:if test="${!empty result}">
 				<p><c:out value="${result}"/><p>
 			</c:if>

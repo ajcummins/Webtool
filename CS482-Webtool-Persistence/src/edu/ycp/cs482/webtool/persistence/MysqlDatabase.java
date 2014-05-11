@@ -21,4 +21,10 @@ public class MysqlDatabase implements IDatabase {
 		return null;
 	}
 
+	@Override
+	public void createUser(User inUser) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
