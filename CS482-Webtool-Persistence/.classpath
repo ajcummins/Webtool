@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-Persistence/lib/mysql-connector.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CS482-Webtool-Model"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
