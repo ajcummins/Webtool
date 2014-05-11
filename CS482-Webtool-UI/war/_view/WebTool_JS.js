@@ -4,7 +4,7 @@ j[0]=0;
 var txtR;
 var pageSave;
 
-function PopUp(){
+function PopUp(){//opens div for section selection
 	document.getElementById('light').style.display='block';
 	document.getElementById('fade').style.display='block';
 	document.getElementById('light').innerHTML="<p>How many Division would you like in this section? </><br>";
@@ -22,7 +22,7 @@ function PopUp(){
 	
 }
 
-function DivisionTypeEdit(){
+function DivisionTypeEdit(){//used for showing picture in div for Divisions
 	var numDiv = document.getElementById('numDivision').value;
 	var width = 600;//document.getElementById("light").style.width-50;
 	var height = 150;
@@ -49,7 +49,7 @@ function DivisionTypeEdit(){
 	ctx.stroke();
 }
 
-function addTemplateToPage(x){
+function addTemplateToPage(x){// used to add chosen template to page
 
 	resetAndCloseDiv();
 	if(x==0){
@@ -107,10 +107,20 @@ function addTemplateToPage(x){
 
 
 
-function picBox(select, selDiv, a, b){
+function picBox(select, selDiv, a, b){// used for showing edits made to text field
 	var index = select.value;//document.getElementById(select).value;  
 	selDiv.innerHTML="";
 	if(index==1){//Text
+		//var arguments ={"Bold"+a+""+b+"", "Ital"+a+""+b+"", "Text"+a+""+b+"", temptext"+a+""+b+"","Font"+a+""+b};
+		
+		var arguments = new Array(5);
+		
+		arguments[0] = "Bold"+a+""+b+"";
+		arguments[1] = "Ital"+a+""+b+"";
+		arguments[2] = "Text"+a+""+b+"";
+		arguments[3] = "temptext"+a+""+b+"";
+		arguments[4] = "Font"+a+""+b+"";		//still need to fix error in by sending arrayfor variables
+		
 		
 		var boldVal="Bold"+a+""+b+"";
 		var italVal="Ital"+a+""+b+"";
@@ -118,27 +128,26 @@ function picBox(select, selDiv, a, b){
 		var temptext="temptext"+a+""+b+"";
 		var fontVal="Font"+a+""+b+"";
 		
-		selDiv.innerHTML+="<textarea id="+temptext+" onchange=textChange("+temptext+", "+txtR+", "+boldVal+", "+italVal+", "+fontVal+")>";
+		selDiv.innerHTML+="<textarea id=temptext onchange=textChange(arguments)></textarea>";
 		selDiv.innerHTML+="<br>";
 		
 		
 		
 		
 		
-		selDiv.innerHTML+="<input id="+boldVal+" onchange=textChange("+temptext+", "+txtR+", "+boldVal+", "+italVal+", "+fontVal+") type=checkbox name=bold value=Bold>Bold</input><br>";
-		selDiv.innerHTML+="<input id="+italVal+" onchange=textChange("+temptext+", "+txtR+", "+boldVal+", "+italVal+", "+fontVal+") type=checkbox name=ital value=Italic>Italic</input><br>";
-		/*selDiv.innerHTML+="<select id=align onchange=textChange("+temptext+", "+txtR+", "+boldVal+", "+italVal+", "+fontVal+")> ";
+		selDiv.innerHTML+="<input id="+boldVal+" onchange=textChange(arguments) type=checkbox name=bold value=Bold>Bold</input><br>";
+		selDiv.innerHTML+="<input id="+italVal+" onchange=textChange(arguments) type=checkbox name=ital value=Italic>Italic</input><br>";
+		/*selDiv.innerHTML+="<select id=align onchange=textChange(arguments)> ";
 		selDiv.innerHTML+="<option value=0>--</option>";
 		selDiv.innerHTML+="<option value=1>Left</option>";
 		selDiv.innerHTML+="<option value=2>Center</option>";
 		selDiv.innerHTML+="<option value=3>Right</option>";
 		selDiv.innerHTML+="</select><br>";*/
-		selDiv.innerHTML+="Font: <input id=fontVal onchange=textChange("+temptext+", "+txtR+", "+boldVal+", "+italVal+", "+fontVal+") type=number name=font value=20>";
+		selDiv.innerHTML+="Font: <input id="+fontVal+" onchange=textChange(arguments) type=number name=font value=20>";
 		
 		selDiv.innerHTML+="<br>Text: ";
-		
-		selDiv.innerHTML+="<br><form><p id="+txtR+" >-</p></form>";
-		
+		txtR="rdyText"+i+""+j[i]+"";
+		selDiv.innerHTML+="<br><form id =yeah><p id="+txtR+" >-</p></form>";
 		
 		
 		//document.getElementById("picEntry").innerHTML+="<button type=button onclick=addTextRegion()>Done</button>";
@@ -159,35 +168,38 @@ function picBox(select, selDiv, a, b){
 	}
 }
 
-function textChange(stxt, dtxt, bol, ita, fnt){//, ali){
-	if(ita.checked){
-		dtxt.style.fontStyle="italic";
+function textChange(arguments){//(stxt, dtxt, bol, ita, fnt){//, ali){
+	for (var i = 0; i < 5; i++) {
+    	alert(arguments[i]);
+  	}
+
+/*
+	if(arguments[3].checked){
+		arguments[1].style.fontStyle="italic";
 	}else{
-		dtxt.style.fontStyle="normal";
+		arguments[1].style.fontStyle="normal";
 	}
 	
-	if(bol.checked){
-		dtxt.style.fontWeight="bold";
+	if(arguments[2].checked){
+		arguments[1].style.fontWeight="bold";
 	}else{
-		dtxt.style.fontWeight="normal";
+		arguments[1].style.fontWeight="normal";
 	}
 	var ali=0;
-	//var ali = dtxt.style.textAlign=document.getElementById("align").value;
+	//var ali = arguments[1].style.textAlign=document.getElementById("align").value;
 	if(ali==1){
-		dtxt.style.textAlign="Left";
+		arguments[1].style.textAlign="Left";
 	}
 	else if(ali==2){
-		dtxt.style.textAlign="Center";
+		arguments[1].style.textAlign="Center";
 	}
 	else if(ali==3){
-		dtxt.style.textAlign="Right";
+		arguments[1].style.textAlign="Right";
 	}
 	
-	dtxt.style.fontSize=document.getElementById(fnt).value+"px";// Times New Roman,serif;";
-	dtxt.innerHTML=document.getElementById(stxt).value;
+	arguments[1].style.fontSize=document.getElementById(arguments[4]).value+"px";// Times New Roman,serif;";
+	arguments[1].innerHTML=document.getElementById(arguments[0]).value;*/
 }
-
-
 
 
 
