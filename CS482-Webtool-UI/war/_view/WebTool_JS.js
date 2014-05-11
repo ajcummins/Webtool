@@ -13,7 +13,11 @@ function PopUp(){
 	document.getElementById('numDivision').innerHTML+="<option value=1>1</option>";
 	document.getElementById('numDivision').innerHTML+="<option value=2>2</option>";
 	document.getElementById('light').innerHTML+="</select><br>";
-	document.getElementById('light').innerHTML+="<div id=canvasDiv> ";
+	document.getElementById('light').innerHTML+="<div id=canvasDiv> </div>";
+	
+	
+	
+	document.getElementById('light').innerHTML+="<br><button type=button id=Smitb onclick=addTemplateToPage(document.getElementById('numDivision').value)>Submit</button>";
 	document.getElementById('light').innerHTML+="<br><a href=javascript:void(0) onclick = resetAndCloseDiv()>Exit</a>";
 	
 }
@@ -23,7 +27,7 @@ function DivisionTypeEdit(){
 	var width = 600;//document.getElementById("light").style.width-50;
 	var height = 150;
 	document.getElementById("canvasDiv").innerHTML="";
-	document.getElementById('canvasDiv').innerHTML+="<canvas id=myCanvas width="+width+" height="+height+" style=border:1px solid #d3d3d3>";
+	document.getElementById("canvasDiv").innerHTML+="<canvas id=myCanvas width="+width+" height="+height+" style=border:1px solid #d3d3d3>";
 	
 	var c=document.getElementById("myCanvas");
 	var ctx=c.getContext("2d");
@@ -44,6 +48,29 @@ function DivisionTypeEdit(){
 	}
 	ctx.stroke();
 }
+
+function addTemplateToPage(x){
+	i++;
+	resetAndCloseDiv();
+	if(x==0){
+		document.getElementById("workingPage").innerHTML+="<select id=selection+ x + onchange=picBox()>"; 
+		document.getElementById("selection").innerHTML+="<option value=0>--</option>";
+		document.getElementById("selection").innerHTML+="<option value=1>Text</option>";
+		document.getElementById("selection").innerHTML+="<option value=2>Picture</option>";
+		document.getElementById("workingPage").innerHTML+="</select><br>";
+		
+		document.getElementById("workingPage").innerHTML+="<div id=picEntry+ x +></div>";
+		document.getElementById("workingPage").innerHTML+="<br>";
+	}
+}
+
+
+
+
+
+
+
+
 
 
 function addTextRegion(){
