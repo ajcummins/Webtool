@@ -19,7 +19,7 @@
 					<tr>
 						<th>Page : </th>
 						<td><a href = "${pageContext.servletContext.contextPath}/Pages/${page.pageName}?action=view">  ${page.pageName}  </a></td>	
-						<td><a href = "${pageContext.servletContext.contextPath}/Pages/${page.pageName}?action=edit">  Edit this Page  </a></td>
+						<td><a href = "${pageContext.servletContext.contextPath}/Webtool">  Edit this Page  </a></td>
 						<td><a href = "${pageContext.servletContext.contextPath}/Pages/${page.pageName}?action=delete">  Delete this Page  </a></td>				
 					</tr>
 				</table>

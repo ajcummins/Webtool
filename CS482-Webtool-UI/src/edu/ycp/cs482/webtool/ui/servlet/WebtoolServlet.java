@@ -15,7 +15,7 @@ public class WebtoolServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/webtool.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/WebTool_UI.html").forward(req, resp);
 		
 	}
 	
