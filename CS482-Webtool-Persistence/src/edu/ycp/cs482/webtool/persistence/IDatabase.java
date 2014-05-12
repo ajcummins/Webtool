@@ -1,8 +1,8 @@
 package edu.ycp.cs482.webtool.persistence;
 
-import java.sql.Connection;
 import java.util.List;
 
+import edu.ycp.cs482.webtool.model.Page;
 import edu.ycp.cs482.webtool.model.Project;
 import edu.ycp.cs482.webtool.model.User;
 
@@ -24,5 +24,13 @@ public interface IDatabase {
 	public Project addProject(Project inProject);
 
 	public boolean addProjectRegEntry(int inUserID, int inProjectID);
+
+	public List<Page> getProjectPages(Project inProject);
+
+	public Page addPage(Page page);
+
+	public boolean addPageRegEntry(int inProjectID, int inPageID);
+
+	public Page getPageByName(String inPageName, int inProjectID);
 	
 }

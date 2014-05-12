@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ycp.cs482.webtool.model.Page;
 import edu.ycp.cs482.webtool.model.Project;
 import edu.ycp.cs482.webtool.model.User;
 
@@ -119,6 +120,23 @@ public class DerbyDatabase implements IDatabase {
 					);
 					stmt.executeUpdate();
 					
+					stmt = conn.prepareStatement(
+							"create table pages(" +
+							"  id integer primary key not null generated always as identity," +
+							"  name varchar(20)" +
+							")"	
+					);
+					stmt.executeUpdate();
+					
+					stmt = conn.prepareStatement(
+							"create table pagereg(" +
+							"  id integer primary key not null generated always as identity," +
+							"  projectid integer ," +
+							"  pageid integer" +
+							")"
+					);
+					stmt.executeUpdate();
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt);
@@ -180,6 +198,15 @@ public class DerbyDatabase implements IDatabase {
 		project.setProjectID(resultSet.getInt(index++));
 		project.setProjectName(resultSet.getString(index++));
 		project.setProjectDesc(resultSet.getString(index++));
+	}
+	
+	private void storePageNoId(Page page, PreparedStatement stmt, int index) throws SQLException{
+		stmt.setString(index++, page.getPageName());
+	}
+	
+	private void loadPage(Page page, ResultSet resultSet, int index) throws SQLException {
+		page.setPageID(resultSet.getInt(index++));
+		page.setPageName(resultSet.getString(index++));
 	}
 	
 	
@@ -321,12 +348,46 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	public List<Page> getAllPages() {
+		return executeTransaction(new Transaction<List<Page>>() {
+			@Override
+			public List<Page> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					// Note: no 'where' so all items will be returned
+					stmt = conn.prepareStatement("select pages.* from pages");
+					
+					resultSet = stmt.executeQuery();
+					
+					List<Page> result = new ArrayList<Page>();
+					while(resultSet.next()){
+						Page anotherPage = new Page();
+						loadPage(anotherPage, resultSet, 1);
+						result.add(anotherPage);
+					}
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	
+	
 	public void printTables() throws SQLException {
 		try {
 			// Obtain Users table
 			List<User> userList = getAllUsers();
-			// Obatin Projects table
+			// Obtain Projects table
 			List<Project> projectList = getAllProjects();
+			// Obtain Page table
+			List<Page> pageList = getAllPages();
+			
 			// Print out users table
 			System.out.println("--------------------------------- Users Table -------------------------------------------");
 			for(int i = 0; i < userList.size(); i++)
@@ -337,6 +398,11 @@ public class DerbyDatabase implements IDatabase {
 			for(int i = 0; i< projectList.size(); i++)
 			{
 				System.out.println("ProjectID: " + projectList.get(i).getProjectID() + " ProjectName: " + projectList.get(i).getProjectName() + " ProjectDesc: " + projectList.get(i).getProjectDesc());
+			}
+			System.out.println("--------------------------------- Page Table ----------------------------------------------");
+			for(int i = 0; i< pageList.size(); i++)
+			{
+				System.out.println("PageID: " + pageList.get(i).getPageID() + " PageName: " + pageList.get(i).getPageName());
 			}
 			
 		} 
@@ -514,6 +580,189 @@ public class DerbyDatabase implements IDatabase {
 				}
 			}
 		});
+	}
+
+	@Override
+	public List<Page> getProjectPages(final Project inProject) {
+		return executeTransaction(new Transaction<List<Page>>() {
+			@Override
+			public List<Page> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					// use project id w/ page reg to get page id's
+					stmt = conn.prepareStatement("select pagereg.pageid from pagereg where pagereg.projectid = ?");								
+					stmt.setInt(1, inProject.getProjectID());
+					
+					resultSet = stmt.executeQuery();
+							
+					// get a list of Project registry entries
+					List<Integer> pageIDs = new ArrayList<Integer>();
+					int index = 1;
+					while(resultSet.next())
+					{
+						pageIDs.add(resultSet.getInt(index++));
+					}
+					// get all the pages w/ the id's
+					List<Page> pages = new ArrayList<Page>();
+					for(int i = 0; i < pageIDs.size(); i++)
+					{
+						stmt = conn.prepareStatement("select pages.* from pages where pages.id = ?");
+						stmt.setInt(1, pageIDs.get(i));
+						
+						resultSet = stmt.executeQuery();
+						
+						// fill the list object with the newly found projects
+						resultSet.next();
+						Page page = new Page();
+						loadPage(page,resultSet,1);
+						pages.add(page);
+					}
+					return pages;
+						
+				} catch(Exception e){
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+
+		});		
+	}
+
+	@Override
+	public Page addPage(final Page page) {
+		return executeTransaction(new Transaction<Page>() {
+			@Override
+			public Page execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet generatedKeys = null;
+				
+				try{
+					stmt = conn.prepareStatement(
+							"insert into pages (name) values (?)",
+							PreparedStatement.RETURN_GENERATED_KEYS);
+					
+					storePageNoId(page,stmt,1);
+					
+					stmt.executeUpdate();
+					
+					generatedKeys = stmt.getGeneratedKeys();
+					if(!generatedKeys.next()){
+						throw new SQLException("Could not get auto-generated key for inserted User");
+					}
+					
+					int pageID = generatedKeys.getInt(1);
+					page.setPageID(pageID);
+					
+					return page;
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					return null;
+				}
+				finally{
+					DBUtil.closeQuietly(generatedKeys);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		
+		});
+	}
+
+	@Override
+	public boolean addPageRegEntry(final int inProjectID,final int inPageID) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					// Using the project id and user id make project entries
+					stmt = conn.prepareStatement(
+							"insert into pagereg (projectid,pageid) values (?,?)",
+							PreparedStatement.RETURN_GENERATED_KEYS
+					);
+					
+					int index = 1;
+					stmt.setInt(index++,inProjectID);
+					stmt.setInt(index++,inPageID);
+					
+					stmt.executeUpdate();
+
+					// Report true if successful
+					return true;
+					
+				} 
+				// Report false if unsuccessful
+				catch(Exception e){
+					return false;
+				}
+				finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public Page getPageByName(final String inPageName, final int inProjectID) {
+		return executeTransaction(new Transaction<Page>() {
+			@Override
+			public Page execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					// get list of pageID's with projectID
+					stmt = conn.prepareStatement("select pagereg.pageid from pagereg where pagereg.projectid = ?");								
+					stmt.setInt(1, inProjectID);
+					
+					resultSet = stmt.executeQuery();
+							
+					// get a list of Project registry entries
+					List<Integer> pageIDs = new ArrayList<Integer>();
+					int index = 1;
+					while(resultSet.next())
+					{
+						pageIDs.add(resultSet.getInt(index++));
+					}
+					
+					// search through list for matching page name
+					Page page = null;
+					for(int i = 0; i < pageIDs.size(); i++)
+					{
+						stmt = conn.prepareStatement("select pages.* from pages where pages.id = ? and pages.name = ?");
+						stmt.setInt(1, pageIDs.get(i));
+						stmt.setString(2, inPageName);
+						
+						resultSet = stmt.executeQuery();
+						
+						// fill the found page;
+						if(resultSet.next())
+						{
+							page = new Page();
+							loadPage(page,resultSet,1);
+						}
+						
+					}
+					return page;
+					
+				} catch(Exception e){
+					e.printStackTrace();
+					return null;
+				}finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+
+			});		
 	}
 	
 	// Utility methods

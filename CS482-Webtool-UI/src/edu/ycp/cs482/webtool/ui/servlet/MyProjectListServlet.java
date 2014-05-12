@@ -13,6 +13,8 @@ import edu.ycp.cs482.webtool.controllers.AddProject;
 import edu.ycp.cs482.webtool.controllers.AddProjectRegEntry;
 import edu.ycp.cs482.webtool.controllers.GetMyProjectList;
 import edu.ycp.cs482.webtool.controllers.GetProjectByName;
+import edu.ycp.cs482.webtool.controllers.GetProjectPages;
+import edu.ycp.cs482.webtool.model.Page;
 import edu.ycp.cs482.webtool.model.Project;
 import edu.ycp.cs482.webtool.model.User;
 
@@ -36,7 +38,6 @@ public class MyProjectListServlet extends HttpServlet{
 			{
 				req.setAttribute("action", action);
 			}
-			
 			String projectName = getProjectName(req);
 			showUI(req, resp, projectName);
 		}
@@ -184,13 +185,32 @@ public class MyProjectListServlet extends HttpServlet{
 			GetProjectByName projectcontroller = new GetProjectByName();
 			Project project = projectcontroller.getProjectByName(projectName);
 			
-			// Obatin and set page list
-			// GetPageList pageListController = new GetPageList()
-			// List<Page> myPageList = controller.getPageList(project)
-			
-			// Set the appropriate Attributes
-			req.setAttribute("Project", project);
-			// req.setAttribute("pagelist", myPageList);
+			// Add the project to the session for later use...
+			if(project != null)
+			{
+				HttpSession session = req.getSession();
+				session.setAttribute("CurrentProject", project);
+				req.setAttribute("Project", project);
+				
+				
+				// Obatin and set page list
+				GetProjectPages pageListController = new GetProjectPages();
+				List<Page> pagelist = pageListController.getProjectPages(project);
+				
+				// If return has projects in it
+				if(pagelist != null && pagelist.size() > 0)
+				{
+					// There are valid projects in the list
+					req.setAttribute("validpages", "true");
+					// Set the appropriate Attributes
+					req.setAttribute("PageList", pagelist);
+				}
+				else
+				{
+					// No project currently for this user
+					req.setAttribute("validpages", "false");
+				}
+			}
 			
 			// Display UI
 			req.getRequestDispatcher("/_view/project.jsp").forward(req,resp);			

@@ -13,8 +13,23 @@
 		<c:if test="${empty action or action == 'view'}">
 			<h1>${Project.projectName}</h1>
 			<h4>Project Description : ${Project.projectDesc}</h4>
-			<p> This is where my pages would go... IF I HAD SOME! </p>
-			
+			<c:if test ="${validpages == 'true'}">
+				<c:forEach var="page" items="${PageList}">
+				<table class="pagelist">
+					<tr>
+						<th>Page : </th>
+						<td><a href = "${pageContext.servletContext.contextPath}/Pages/${page.pageName}?action=view">  ${page.pageName}  </a></td>	
+						<td><a href = "${pageContext.servletContext.contextPath}/Pages/${page.pageName}?action=edit">  Edit this Page  </a></td>
+						<td><a href = "${pageContext.servletContext.contextPath}/Pages/${page.pageName}?action=delete">  Delete this Page  </a></td>				
+					</tr>
+				</table>
+				<br>	
+				</c:forEach>
+			</c:if>
+			<c:if test="${empty validpages or validpages == 'false'}">
+				<h4> There are no pages in this project currently </h4>
+			</c:if>	
+			<div class="link"><a href="${pageContext.servletContext.contextPath}/Pages/NewPage?action=newpage">Create New Page</a></div>
 		</c:if>
 		
 		<c:if test="${action == 'share'}">

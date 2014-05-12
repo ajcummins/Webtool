@@ -7,6 +7,11 @@ public class Page {
 	private String pageName;
 	private ArrayList<Section> sectionList;
 	
+	public Page()
+	{
+		
+	}
+	
 	public Page(String inPageName)
 	{
 		setPageName(inPageName);
