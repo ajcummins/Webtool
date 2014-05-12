@@ -12,6 +12,11 @@ public class Project
 	// Can't represent this in a database with finite limitations... have to use a registry
 	//private ArrayList<Integer> pageIDList;
 	
+	public Project()
+	{
+		
+	}
+	
 	public Project(String inProjectName, String inProjectDescription)
 	{
 		projectName = inProjectName;

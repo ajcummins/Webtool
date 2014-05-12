@@ -27,7 +27,5 @@
 				<p><c:out value="${result}"/><p>
 			</c:if>
 		</form>
-
-
 	</body>
 </html>

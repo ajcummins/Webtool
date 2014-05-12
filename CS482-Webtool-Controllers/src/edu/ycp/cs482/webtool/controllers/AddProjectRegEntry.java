@@ -4,10 +4,10 @@ import edu.ycp.cs482.webtool.model.User;
 import edu.ycp.cs482.webtool.persistence.DatabaseProvider;
 import edu.ycp.cs482.webtool.persistence.IDatabase;
 
-public class CreateUserController {
-	public User createUser(User inUser)
+public class AddProjectRegEntry {
+	public boolean addProjectRegEntry(int inUserID, int inProjectID)
 	{
 		IDatabase db = DatabaseProvider.getInstance();
-		return db.createUser(inUser);
+		return db.addProjectRegEntry(inUserID,inProjectID);
 	}
 }

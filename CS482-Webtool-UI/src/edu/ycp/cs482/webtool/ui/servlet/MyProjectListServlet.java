@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.ycp.cs482.webtool.controllers.AddProject;
+import edu.ycp.cs482.webtool.controllers.AddProjectRegEntry;
 import edu.ycp.cs482.webtool.controllers.GetMyProjectList;
 import edu.ycp.cs482.webtool.controllers.GetProjectByName;
 import edu.ycp.cs482.webtool.model.Project;
@@ -79,10 +81,36 @@ public class MyProjectListServlet extends HttpServlet{
 				else if(action.trim().equals("newproject"))
 				{
 					// Obtain the project detail
-					
+					String tempProjectName = (String) req.getParameter("projectName");
+					String projectDesc = (String) req.getParameter("projDesc");
+
 					// Stuff the details in a project model class
-					
+					Project tempProject = new Project(tempProjectName,projectDesc);
 					// Add the project to the database using the controller
+					AddProject addProjController = new AddProject();
+					Project returnedProject = addProjController.addProject(tempProject);
+					if(returnedProject != null)
+					{
+						// AddProject was successful add an entry to the User|Project registry
+						AddProjectRegEntry projRegController = new AddProjectRegEntry();
+						boolean success = projRegController.addProjectRegEntry(currentUser.getUserID(),returnedProject.getProjectID());
+						if(success)
+						{
+							// Redirect to back to the MyProjectList
+							req.setAttribute("action", "view");
+						}
+						else
+						{
+							// Error add User|Project entry to registry failed
+							req.setAttribute("result","Add Entry to User|Project Registry Failed Unexpectedly...");
+						}
+					}
+					else
+					{
+						// Error create new project failed
+						req.setAttribute("result", "Create New Project Failed Unexpectedly...");
+					}
+					
 				}
 				else
 				{
@@ -140,13 +168,13 @@ public class MyProjectListServlet extends HttpServlet{
 				// set the project list for the UI
 				req.setAttribute("MyProjectList", myprojectlist);
 				// display the view
-				req.getRequestDispatcher("/_view/MyProjectList.jsp").forward(req,resp);
+				req.getRequestDispatcher("/_view/myProjects.jsp").forward(req,resp);
 			}
 			else
 			{
 				// No project currently for this user
 				req.setAttribute("validprojects", "false");
-				req.getRequestDispatcher("/_view/MyProjectList.jsp").forward(req,resp);
+				req.getRequestDispatcher("/_view/myProjects.jsp").forward(req,resp);
 			}
 			
 		}
@@ -165,7 +193,7 @@ public class MyProjectListServlet extends HttpServlet{
 			// req.setAttribute("pagelist", myPageList);
 			
 			// Display UI
-			req.getRequestDispatcher("/_view/Project.jsp").forward(req,resp);			
+			req.getRequestDispatcher("/_view/project.jsp").forward(req,resp);			
 		}
 	}
 }

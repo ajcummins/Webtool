@@ -99,7 +99,24 @@ public class DerbyDatabase implements IDatabase {
 							"  password varchar(20)" +
 							")"
 					);
+					stmt.executeUpdate();
 					
+					stmt = conn.prepareStatement(
+							"create table projects(" +
+							"  id integer primary key not null generated always as identity," +
+							"  name varchar(20) unique," +
+							"  description varchar(100)" +
+							")"	
+					);
+					stmt.executeUpdate();
+					
+					stmt = conn.prepareStatement(
+							"create table projectreg(" +
+							"  id integer primary key not null generated always as identity," +
+							"  userid integer ," +
+							"  projectid integer" +
+							")"
+					);
 					stmt.executeUpdate();
 					
 					return true;
@@ -154,6 +171,17 @@ public class DerbyDatabase implements IDatabase {
 		user.setPassword(resultSet.getString(index++));
 	}
 	
+	private void storeProjectNoId(Project inProject, PreparedStatement stmt, int index) throws SQLException{
+		stmt.setString(index++, inProject.getProjectName());
+		stmt.setString(index++, inProject.getProjectDesc());
+	}
+	
+	private void loadProject(Project project, ResultSet resultSet, int index) throws SQLException {
+		project.setProjectID(resultSet.getInt(index++));
+		project.setProjectName(resultSet.getString(index++));
+		project.setProjectDesc(resultSet.getString(index++));
+	}
+	
 	
 // Controller Methods	
 
@@ -191,10 +219,10 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public Boolean createUser(final User inUser) {
-		return executeTransaction(new Transaction<Boolean>() {
+	public User createUser(final User inUser) {
+		return executeTransaction(new Transaction<User>() {
 			@Override
-			public Boolean execute(Connection conn) throws SQLException {
+			public User execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet generatedKeys = null;
 				
@@ -207,12 +235,20 @@ public class DerbyDatabase implements IDatabase {
 					storeUserNoId(inUser,stmt,1);
 					
 					stmt.executeUpdate();
-
-					return true;
+					
+					// Get the User ID back
+					generatedKeys = stmt.getGeneratedKeys();
+					if (!generatedKeys.next()) {
+						throw new SQLException("Could not get auto-generated key for inserted Item");
+					}
+					
+					inUser.setUserID(generatedKeys.getInt(1));
+					
+					return inUser;
 				}
 				catch(Exception e)
 				{
-					return false;
+					return null;
 				}
 				finally
 				{
@@ -256,15 +292,51 @@ public class DerbyDatabase implements IDatabase {
 		
 	}
 	
+	public List<Project> getAllProjects() {
+		return executeTransaction(new Transaction<List<Project>>() {
+			@Override
+			public List<Project> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					// Note: no 'where' so all items will be returned
+					stmt = conn.prepareStatement("select projects.* from projects");
+					
+					resultSet = stmt.executeQuery();
+					
+					List<Project> result = new ArrayList<Project>();
+					while(resultSet.next()){
+						Project anotherProject = new Project();
+						loadProject(anotherProject, resultSet, 1);
+						result.add(anotherProject);
+					}
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
 	public void printTables() throws SQLException {
 		try {
 			// Obtain Users table
 			List<User> userList = getAllUsers();
+			// Obatin Projects table
+			List<Project> projectList = getAllProjects();
 			// Print out users table
 			System.out.println("--------------------------------- Users Table -------------------------------------------");
 			for(int i = 0; i < userList.size(); i++)
 			{
 				System.out.println("UserID: " + userList.get(i).getUserID() + " Username: " + userList.get(i).getUsername() + " Password: " + userList.get(i).getPassword());
+			}
+			System.out.println("--------------------------------- Projects Table ------------------------------------------");
+			for(int i = 0; i< projectList.size(); i++)
+			{
+				System.out.println("ProjectID: " + projectList.get(i).getProjectID() + " ProjectName: " + projectList.get(i).getProjectName() + " ProjectDesc: " + projectList.get(i).getProjectDesc());
 			}
 			
 		} 
@@ -281,17 +353,167 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public List<Project> getMyProjectList(User inUser)
+	public List<Project> getMyProjectList(final User inUser)
 	{
-		return null;
+		return executeTransaction(new Transaction<List<Project>>() {
+			@Override
+			public List<Project> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					// use user id w/ project reg to get project id's
+					stmt = conn.prepareStatement("select projectreg.projectid from projectreg where projectreg.userid = ?");								
+					stmt.setInt(1, inUser.getUserID());
+					
+					resultSet = stmt.executeQuery();
+							
+					// get a list of Project registry entries
+					List<Integer> projectIDs = new ArrayList<Integer>();
+					int index = 1;
+					while(resultSet.next())
+					{
+						projectIDs.add(resultSet.getInt(index++));
+					}
+					// get all the Project w/ the id's
+					List<Project> projects = new ArrayList<Project>();
+					for(int i = 0; i < projectIDs.size(); i++)
+					{
+						stmt = conn.prepareStatement("select projects.* from projects where projects.id = ?");
+						stmt.setInt(1, projectIDs.get(i));
+						
+						resultSet = stmt.executeQuery();
+						
+						// fill the list object with the newly found projects
+						resultSet.next();
+						Project project = new Project();
+						loadProject(project,resultSet,1);
+						projects.add(project);
+					}
+					return projects;
+						
+				} catch(Exception e){
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+
+		});		
 	}
 
-	List<Project> projects = new ArrayList<Project>();
 
 	@Override
-	public Project getProjectByName(String inProjectName) {
-		// TODO Auto-generated method stub
-		return null;
+	public Project getProjectByName(final String inProjectName) {
+		return executeTransaction(new Transaction<Project>() {
+			@Override
+			public Project execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					// get user id w/ username
+					stmt = conn.prepareStatement("select projects.* from projects where projects.name = ?");
+					stmt.setString(1, inProjectName);
+					
+					resultSet = stmt.executeQuery();
+					if(!resultSet.next()){
+						return null;
+					}
+					else
+					{
+						Project tempProject = new Project();
+						loadProject(tempProject,resultSet,1);
+						return tempProject;
+					}
+					
+					
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+
+			});		
+	}
+
+	@Override
+	public Project addProject(final Project inProject) {
+		return executeTransaction(new Transaction<Project>() {
+			@Override
+			public Project execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet generatedKeys = null;
+				
+				try{
+					stmt = conn.prepareStatement(
+							"insert into projects (name,description) values (?,?)",
+							PreparedStatement.RETURN_GENERATED_KEYS);
+					
+					storeProjectNoId(inProject,stmt,1);
+					
+					stmt.executeUpdate();
+					
+					generatedKeys = stmt.getGeneratedKeys();
+					if(!generatedKeys.next()){
+						throw new SQLException("Could not get auto-generated key for inserted User");
+					}
+					
+					int projectID = generatedKeys.getInt(1);
+					inProject.setProjectID(projectID);
+					
+					return inProject;
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					return null;
+				}
+				finally{
+					DBUtil.closeQuietly(generatedKeys);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		
+		});
+	}
+
+	@Override
+	public boolean addProjectRegEntry(final int inUserID, final int inProjectID) {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					// Using the project id and user id make project entries
+					stmt = conn.prepareStatement(
+							"insert into projectreg (userid,projectid) values (?,?)",
+							PreparedStatement.RETURN_GENERATED_KEYS
+					);
+					
+					int index = 1;
+					stmt.setInt(index++,inUserID);
+					stmt.setInt(index++,inProjectID);
+					
+					stmt.executeUpdate();
+
+					// Report true if successful
+					return true;
+					
+				} 
+				// Report false if unsuccessful
+				catch(Exception e){
+					return false;
+				}
+				finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
 	}
 	
 	// Utility methods

@@ -15,10 +15,14 @@ public interface IDatabase {
 
 	public User authenticateUser(String inUser, String inPass);
 
-	public Boolean createUser(User inUser);
+	public User createUser(User inUser);
 
 	public List<Project> getMyProjectList(User inUser);
 
 	public Project getProjectByName(String inProjectName);
+
+	public Project addProject(Project inProject);
+
+	public boolean addProjectRegEntry(int inUserID, int inProjectID);
 	
 }

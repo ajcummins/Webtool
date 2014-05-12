@@ -53,13 +53,13 @@ public class CreateUserServlet extends HttpServlet{
 				User newUser = new User(username,pass);
 
 
-				boolean success = controller.createUser(newUser);
+				User returnedUser = controller.createUser(newUser);
 				
-				if(success)
+				if(returnedUser != null)
 				{
 					// Add User to session
 					HttpSession session = req.getSession();
-					session.setAttribute("User", newUser);
+					session.setAttribute("User", returnedUser);
 	
 					//  Redirect to My Course List... 
 					resp.sendRedirect(req.getContextPath()+"/MyProjects");
