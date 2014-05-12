@@ -53,22 +53,36 @@ function addTemplateToPage(x){// used to add chosen template to page
 
 	resetAndCloseDiv();
 	if(x==0){
-		var sel = "selection"+ i;
+		var sel = "selection"+i;
 		var selEntryVar = "selEntry"+ i +"0";
-		document.getElementById("workingPage").innerHTML+="<span id=selection"+i+">";
-			document.getElementById("selection"+i).innerHTML+="<select id="+sel+" onchange=picBox("+sel+","+selEntryVar+","+i+","+0+")>"; 
-				document.getElementById(sel).innerHTML+="<option value=0>--</option>";
-				document.getElementById(sel).innerHTML+="<option value=1>Text</option>";
-				document.getElementById(sel).innerHTML+="<option value=2>Picture</option>";
-			document.getElementById("selection"+i).innerHTML+="</select>";
+		/*
+		document.getElementById("workingPage").innerHTML+="<span id=span"+i+">";
+			document.getElementById("span"+i).innerHTML+="<select id="+sel+" onchange=picBox("+sel+","+selEntryVar+","+i+","+0+")>"; 
+				document.getElementById(sel).innerHTML="<option>--</option>";
+				document.getElementById(sel).innerHTML+="<option value=text>Text</option>";
+				document.getElementById(sel).innerHTML+="<option value=picture>Picture</option>";
+				document.getElementById(sel).innerHTML+="<option value=link>Link</option>";
+			document.getElementById("span"+i).innerHTML+="</select>";
+			document.getElementById("span"+i).innerHTML+="<div id="+selEntryVar+"></div>";
 		document.getElementById("workingPage").innerHTML+="</span>";
+		*/
+		document.getElementById("workingPage").innerHTML+="<div id=section"+i+" name=section"+i+"></div>";
+			document.getElementById("section"+i).innerHTML+="<table id=table"+i+" name=table"+i+"></table>";
+				document.getElementById("table"+i).innerHTML+="<tr><td><span id=Division0 name=Division0></span></tr></td>";
+					document.getElementById("Division0").innerHTML+="<select id="+sel+" onchange=picBox("+sel+","+selEntryVar+","+i+","+0+")></select>"; 
+						document.getElementById(sel).innerHTML+="<option >--</option>";
+						document.getElementById(sel).innerHTML+="<option value=text>Text</option>";
+						document.getElementById(sel).innerHTML+="<option value=picture>Picture</option>";
+						document.getElementById(sel).innerHTML+="<option value=link>Link</option>";
+					document.getElementById("Division0").innerHTML+="<div id="+selEntryVar+"></div>";
+							
+				
+				
 		
-		
-		document.getElementById("selection"+i).innerHTML+="<div id="+selEntryVar+"></div>";
-		document.getElementById("selection"+i).innerHTML+="<br>";
+		//document.getElementById("selection"+i).innerHTML+="<br>";
 	}
 	if(x==1){
-		var sel = "selection"+ i + "0";
+		/*var sel = "selection"+ i + "0";
 		var selEntryVar = "selEntry"+ i +"0";
 		
 		var selEntryVar2 = "selEntry"+ i +"1";
@@ -84,121 +98,192 @@ function addTemplateToPage(x){// used to add chosen template to page
 		
 		//left side span
 			document.getElementById(spanVar).innerHTML+="<select id="+sel+" onchange=picBox("+sel+","+selEntryVar+","+i+","+0+")></select>";
-				document.getElementById(sel).innerHTML+="<option value=0>--</option>";
-				document.getElementById(sel).innerHTML+="<option value=1>Text</option>";
-				document.getElementById(sel).innerHTML+="<option value=2>Picture</option>";
+				document.getElementById(sel).innerHTML+="<option>--</option>";
+				document.getElementById(sel).innerHTML+="<option value=text>Text</option>";
+				document.getElementById(sel).innerHTML+="<option value=picture>Picture</option>";
+				document.getElementById(sel).innerHTML+="<option value=link>Link</option>";
 				
 		//document.getElementById("selection"+i).innerHTML+="<div id="+selEntryVar+"></div>";
 				
 		
 		//right side span
 			document.getElementById(spanVar2).innerHTML+="<select id="+sel2+" onchange=picBox("+sel2+","+selEntryVar2+","+i+","+1+")></select>";
-				document.getElementById(sel2).innerHTML+="<option value=0>--</option>";
-				document.getElementById(sel2).innerHTML+="<option value=1>Text</option>";
-				document.getElementById(sel2).innerHTML+="<option value=2>Picture</option>";
+				document.getElementById(sel2).innerHTML+="<option >--</option>";
+				document.getElementById(sel2).innerHTML+="<option value=text>Text</option>";
+				document.getElementById(sel2).innerHTML+="<option value=picture>Picture</option>";
+				document.getElementById(sel2).innerHTML+="<option value=link>Link</option>";
 		
 		//document.getElementById("selection"+i).innerHTML+="<div id="+selEntryVar2+"></div>";
 		document.getElementById("selection"+i).innerHTML+="<br>";
+		*/
+		
+		document.getElementById("workingPage").innerHTML+="<div id=section"+i+" name=section"+i+"></div>";
+			document.getElementById("section"+i).innerHTML+="<table id=table"+i+" name=table"+i+" width=100%></table>";
+				document.getElementById("table"+i).innerHTML+="<tr><td><center><span id=Division0 name=Division0></span></center></td><td><center><span id=Division1 name=Division1></span></center><tr><td>";
+			
+		var sel = "selection"+ i + "0";	
+		var selEntryVar = "selEntry"+ i +"0";
+		var selEntryVar2 = "selEntry"+ i +"1";
+		
+		var sel2 = "selection"+ i + "1";
+		var spanVar = "Division0";
+		var spanVar2 = "Division1";
+				
+				
+				//left side span
+				document.getElementById(spanVar).innerHTML+="<select id="+sel+" onchange=picBox("+sel+","+spanVar+","+i+","+0+")></select>";
+				document.getElementById(sel).innerHTML+="<option >--</option>";
+				document.getElementById(sel).innerHTML+="<option value=text>Text</option>";
+				document.getElementById(sel).innerHTML+="<option value=picture>Picture</option>";
+				document.getElementById(sel).innerHTML+="<option value=link>Link</option>";
+				
+				
+				
+				
+				
+				//right side span
+				document.getElementById(spanVar2).innerHTML+="<select id="+sel2+" onchange=picBox("+sel2+","+spanVar2+","+i+","+1+")></select>";
+				document.getElementById(sel2).innerHTML+="<option >--</option>";
+				document.getElementById(sel2).innerHTML+="<option value=text>Text</option>";
+				document.getElementById(sel2).innerHTML+="<option value=picture>Picture</option>";
+				document.getElementById(sel2).innerHTML+="<option value=link>Link</option>";
+				
+				//document.getElementById("selection"+i).innerHTML+="<br>";
+				
 	}
 	
 	i++;
 }
+function italChange(ita, dtxt){
+	if(ita.checked){
+		dtxt.style.fontStyle="italic";
+	}else{
+		dtxt.style.fontStyle="normal";
+	}
+}
+
+function boldChange(bol, dtxt){
+	if(bol.checked){
+		dtxt.style.fontWeight="bold";
+	}else{
+		dtxt.style.fontWeight="normal";
+	}
+}
+function fontChange(fnt, dtxt){
+	dtxt.style.fontSize=fnt.value+"px";
+}
+
+function textChange(stxt, dtxt){
+	//dtxt = stxt;
+	dtxt.innerHTML=stxt.value;
+}
+
+function alignChange(ali, dtxt){//(stxt, dtxt, bol, ita, fnt){//, ali){
+	if(ali==1){
+		dtxt.style.textAlign="Left";
+	}
+	else if(ali==2){
+		dtxt.style.textAlign="Center";
+	}
+	else if(ali==3){
+		dtxt.style.textAlign="Right";
+	}
+}
 
 
+function addImg(sImg, spanId, a , b){	
+
+	imgN = "image" +a+""+b;
+	spanId.innerHTML+="<img id="+imgN+"></img>";
+	document.getElementById(imgN).src=sImg.value; 
+	
+	
+	//document.getElementById("picEntry").innerHTML+=<input type="submit" value="Submit">
+	
+	//Div.innerHTML+="<button type=button onclick=addImgToPage()>Done</button>"
+	
+}
 
 
 function picBox(select, selDiv, a, b){// used for showing edits made to text field
 	var index = select.value;//document.getElementById(select).value;  
 	selDiv.innerHTML="";
-	if(index==1){//Text
-		//var arguments ={"Bold"+a+""+b+"", "Ital"+a+""+b+"", "Text"+a+""+b+"", temptext"+a+""+b+"","Font"+a+""+b};
+	if(index=='text'){//Text
+		boldVal="Bold"+a+""+b+"";
+		italVal="Ital"+a+""+b+"";
+		aliVal="Align"+a+""+b+"";
+		txtR="Text"+a+""+b+"";
+		temptext="temptext"+a+""+b+"";
+		fontVal="Font"+a+""+b+"";
 		
-		var arguments = new Array(5);
+		var arguments = [temptext, txtR];//, boldVal, italVal,fontVal];
+		var argumentsB = [boldVal, txtR];//[ 'Bold'+a+''+b];
+		var argumentsI = [ italVal, txtR];
+		var argumentsF = [ fontVal, txtR];
+		var argumentsA = [ aliVal, txtR];
 		
-		arguments[0] = "Bold"+a+""+b+"";
-		arguments[1] = "Ital"+a+""+b+"";
-		arguments[2] = "Text"+a+""+b+"";
-		arguments[3] = "temptext"+a+""+b+"";
-		arguments[4] = "Font"+a+""+b+"";		//still need to fix error in by sending arrayfor variables
-		
-		
-		var boldVal="Bold"+a+""+b+"";
-		var italVal="Ital"+a+""+b+"";
-		var txtR="Text"+a+""+b+"";
-		var temptext="temptext"+a+""+b+"";
-		var fontVal="Font"+a+""+b+"";
-		
-		selDiv.innerHTML+="<textarea id=temptext onchange=textChange(arguments)></textarea>";
+		selDiv.innerHTML+="<textarea id="+temptext+" onchange=textChange("+arguments+");></textarea>";
 		selDiv.innerHTML+="<br>";
 		
-		
-		
-		
-		
-		selDiv.innerHTML+="<input id="+boldVal+" onchange=textChange(arguments) type=checkbox name=bold value=Bold>Bold</input><br>";
-		selDiv.innerHTML+="<input id="+italVal+" onchange=textChange(arguments) type=checkbox name=ital value=Italic>Italic</input><br>";
-		/*selDiv.innerHTML+="<select id=align onchange=textChange(arguments)> ";
-		selDiv.innerHTML+="<option value=0>--</option>";
-		selDiv.innerHTML+="<option value=1>Left</option>";
-		selDiv.innerHTML+="<option value=2>Center</option>";
-		selDiv.innerHTML+="<option value=3>Right</option>";
+		selDiv.innerHTML+="<input id="+boldVal+" onchange=boldChange("+argumentsB+") type=checkbox name=bold value=true>Bold</input><br>";
+		selDiv.innerHTML+="<input id="+italVal+" onchange=italChange("+argumentsI+") type=checkbox name=ital value=true>Italic</input><br>";
+		/*
+		selDiv.innerHTML+="<select id="+aliVal+" onchange=alignChange("+argumentsA+")> ";
+			document.getElementById(aliVal).innerHTML="<option value=0>--</option>";
+			document.getElementById(aliVal).innerHTML+="<option value=1>Left</option>";
+			document.getElementById(aliVal).innerHTML+="<option value=2>Center</option>";
+			document.getElementById(aliVal).innerHTML+="<option value=3>Right</option>";
 		selDiv.innerHTML+="</select><br>";*/
-		selDiv.innerHTML+="Font: <input id="+fontVal+" onchange=textChange(arguments) type=number name=font value=20>";
+		selDiv.innerHTML+="Font: <input id="+fontVal+" onchange=fontChange("+argumentsF+") type=number name=font value=20>";
 		
 		selDiv.innerHTML+="<br>Text: ";
-		txtR="rdyText"+i+""+j[i]+"";
+		//txtR="Text"+i+""+j[i]+"";
 		selDiv.innerHTML+="<br><form id =yeah><p id="+txtR+" >-</p></form>";
+		
+		
 		
 		
 		//document.getElementById("picEntry").innerHTML+="<button type=button onclick=addTextRegion()>Done</button>";
 	}
-	else if(index==2){//Images
-		document.getElementById("picEntry").innerHTML+="<form name=Upload enctype=multipart/form-data method=post>";
-		document.getElementById("picEntry").innerHTML+="Filename: <INPUT type=file id=submit>";
+	else if(index=='picture'){//Images
+		selDiv.innerHTML+="<form name=Upload enctype=multipart/form-data method=post>";
+		selDiv.innerHTML+="Filename: <INPUT type=file id=submit>";
 			//document.getElementById("picEntry").innerHTML+="<INPUT type="button" id="send" value="Upload">"
-		document.getElementById("picEntry").innerHTML+="</form>";
-		document.getElementById("picEntry").innerHTML+="<p>Or Enter URL of image: <p><textarea id=test0>";
+		selDiv.innerHTML+="</form>";
+		
+		tmpImage = "tmpImage"+a+""+b+"";
+		image = "image"+a+""+b+"";
 		
 		
-		document.getElementById("picEntry").innerHTML+="<button type=button onclick=addImg()>Update Image</button><br>";
+		selDiv.innerHTML+="<p>Or Enter URL of image: </p><textarea id="+tmpImage+">";
+		
+		
+		
+		var spanId = "span"+a+""+b;
+		
+		selDiv.innerHTML+="<br><form id =yeah><span id="+spanId+"></span></form>";
+		
+		
+		selDiv.innerHTML+="<form>";
+		hId = "height" +a+""+b;
+		wId = "width" +a+""+b;
+		//selDiv.innerHTML+="Height: <input id="+hId+" type=number name=Height value="+100+" onchange=updateHImg("+hId+",image"+a+""+b+")><br>";
+		//selDiv.innerHTML+="Width: <input id="+wId+" type=number name=Width value="+100+" onchange=updateWImg("+wId+",image"+a+""+b+")><br></form>";
+		var args = [tmpImage, spanId, a, b ];
+		
+		selDiv.innerHTML+="<button type=button onclick=addImg("+args+")>Update Image</button><br>";
 		
 		//document.getElementById("picEntry").innerHTML+="";
 	}else{
-		document.getElementById("picEntry").innerHTML="";
+		selDiv.innerHTML="";
 	}
 }
 
-function textChange(arguments){//(stxt, dtxt, bol, ita, fnt){//, ali){
-	for (var i = 0; i < 5; i++) {
-    	alert(arguments[i]);
-  	}
-
-/*
-	if(arguments[3].checked){
-		arguments[1].style.fontStyle="italic";
-	}else{
-		arguments[1].style.fontStyle="normal";
-	}
-	
-	if(arguments[2].checked){
-		arguments[1].style.fontWeight="bold";
-	}else{
-		arguments[1].style.fontWeight="normal";
-	}
-	var ali=0;
-	//var ali = arguments[1].style.textAlign=document.getElementById("align").value;
-	if(ali==1){
-		arguments[1].style.textAlign="Left";
-	}
-	else if(ali==2){
-		arguments[1].style.textAlign="Center";
-	}
-	else if(ali==3){
-		arguments[1].style.textAlign="Right";
-	}
-	
-	arguments[1].style.fontSize=document.getElementById(arguments[4]).value+"px";// Times New Roman,serif;";
-	arguments[1].innerHTML=document.getElementById(arguments[0]).value;*/
+function updateHImg(sor, des){
+	des.height = sor.value;
+}
+function updateWImg(sor, des){
+	des.width = sor.value;
 }
 
 
@@ -234,26 +319,14 @@ function addTextRegion(){
 	i++;
 }
 
-function addImg(){
-	document.getElementById("picEntry").innerHTML+="<img id=imgtest src="+ document.getElementById("test0").value +" height=100 width=100>";
-	document.getElementById("picEntry").innerHTML+="<form>";
-	document.getElementById("picEntry").innerHTML+="Height: <input id=h type=number name=Height value="+document.getElementById("imgtest").height+" onchange=updateHWImg()><br>";
-	document.getElementById("picEntry").innerHTML+="Width: <input id=w type=number name=Width value="+document.getElementById("imgtest").width+" onchange=updateHWImg()><br></form>";
-	//document.getElementById("picEntry").innerHTML+=<input type="submit" value="Submit">
-	
-	document.getElementById("picEntry").innerHTML+="<button type=button onclick=addImgToPage()>Done</button>"
-	
-}
+
 function addImgToPage(){
 	document.getElementById("tmp").innerHTML+="<img src="+ document.getElementById("imgtest").src +" height="+document.getElementById("imgtest").height+" width="+document.getElementById("imgtest").width+">";
 	document.getElementById("tmp").innerHTML+="<br>";
 	resetAndCloseDiv();
 	i++;
 }
-function updateHWImg(){
-	document.getElementById("imgtest").height = document.getElementById("h").value;
-	document.getElementById("imgtest").width = document.getElementById("w").value;
-}
+
 function addSideRegion(){
 	document.getElementById('light').style.display='block';
 	document.getElementById('fade').style.display='block';
