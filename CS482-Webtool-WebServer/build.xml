@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="jar" name="Webtool">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+	
+	<!-- Directory with Jetty jar files (assumed to be in 'lib' subdirectory of this directory. -->
+	<property name="jetty.dir" value="."/>
+	
+	<!-- Directory with Derby jar files. -->
+	<property name="derby.dir" value="C:/Users/AJC/workspace/CS496_Derby"/>
+	
+	<!-- Name of the deployable jarfile to run the webapp. -->
+	<property name="jarname" value="Webtool.jar" />
+
+	<path id="Webtool.classpath">
+        <pathelement location="bin"/>
+		<fileset dir="./lib" includes="**/*.jar"/>
+    </path>
+    
+	<target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+	
+    <target name="build" depends="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+    	<mkdir dir="bin"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="Webtool.classpath"/>
+        </javac>
+    </target>
+	
+	<!--
+		Combine all of the Jetty jarfiles into a single jarfile.
+	-->
+	<target name="jettyDeps">
+		<jar destfile="jettyDeps.jar">
+			<zipgroupfileset dir="${jetty.dir}/lib" includes="**/*.jar" excludes="**/*taglibs*.jar"/>
+		</jar>
+	</target>
+	
+	<!--
+		Make a single jar file with all of the model classes, controller classes,
+		persistence classes, etc.
+	-->
+	<target name="appDeps">
+		<jar destfile="appDeps.jar">
+			<!-- Copy controller classes. -->
+			<fileset dir="../CS482-Webtool-Controllers/bin" includes="**" />
+			
+			<!-- Copy model classes. -->
+			<fileset dir="../CS482-Webtool-Model/bin" includes="**" />
+			
+			<!-- Copy persistence classes. -->
+			<fileset dir="../CS482-Webtool-Persistence/bin" includes="**" />
+		</jar>
+	</target>
+	
+	<!--
+		Target to build a single deployable jarfile containing both
+		the webapp (and required libraries) and Jetty (the web server).
+	-->
+	<target name="jar" depends="build,jettyDeps,appDeps">
+		<!--
+			Build single deployable jarfile containing our launcher code,
+			all requried libraries, and the webapp.  Note that signatures
+			must be removed from the libraries.
+		-->
+		<jar destfile="${jarname}" update="true">
+			<!-- Copy classes  from the bin directory. -->
+			<fileset dir="bin" includes="**"/>
+
+			<!-- Copy classes and other files from required libraries and Jetty. -->
+			<zipfileset src="jettyDeps.jar" excludes="META-INF/**"/>
+			
+			<!-- Include the webapp.
+			     However, exclude the slf4j jars, since Jetty will already have
+			     them on its classpath, and we don't want two copies. -->
+			<fileset
+				dir="../CS482-Webtool-UI"
+				includes="war/**"
+				excludes="**/slf4j*.jar,war/logs/**" />
+			
+			<!-- Copy required application classes into webapp's lib directory. -->
+			<zipfileset file="appDeps.jar" fullpath="war/WEB-INF/lib/appDeps.jar"/>
+			
+			<!-- Copy Derby jar files into webapp's lib directory -->
+			<zipfileset file="${derby.dir}/lib/derby.jar" fullpath="war/WEB-INF/lib/derby.jar"/>
+			<zipfileset file="${derby.dir}/lib/derbyclient.jar" fullpath="war/WEB-INF/lib/derbyclient.jar"/>
+			<zipfileset file="${derby.dir}/lib/derbynet.jar" fullpath="war/WEB-INF/lib/derbynet.jar"/>
+			<zipfileset file="${derby.dir}/lib/derbyrun.jar" fullpath="war/WEB-INF/lib/derbyrun.jar"/>
+			<zipfileset file="${derby.dir}/lib/derbytools.jar" fullpath="war/WEB-INF/lib/derbytools.jar"/>
+
+			<!-- Include a Manifest specifying the Main-Class to start/control/shutdown the webapp. -->
+			<manifest>
+				<attribute name="Main-Class" value="edu.ycp.cs482.webtool.webserver.WebtoolDaemonController" />
+			</manifest>
+		</jar>
+	</target>
+	
+    <target name="clean">
+        <delete quiet="true">
+        	<fileset dir="bin" includes="**"/>
+        </delete>
+        <delete quiet="true">
+        	<fileset dir="war/WEB-INF/classes" includes="**"/>
+        </delete>
+    	<delete quiet="true" file="${jarname}"/>
+    	<delete quiet="true" file="jettyDeps.jar"/>
+    	<delete quiet="true" file="appDeps.jar"/>
+    </target>
+</project>

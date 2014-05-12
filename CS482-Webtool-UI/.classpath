@@ -5,6 +5,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/CS482-Webtool-Controllers"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CS482-Webtool-Model"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CS482-Webtool-Persistence"/>
-	<classpathentry kind="lib" path="/CS482-Webtool-WebServer/lib/servlet-api-3.0.jar"/>
+	<classpathentry kind="lib" path="/CS482-Webtool-WebServer/lib/jetty/servlet-api-2.5.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

@@ -1,2 +1,7 @@
 /bin
 /derby.log
+/Webtool.jar
+/jettyDeps.jar
+/logs
+/derby.log
+/appDeps.jar

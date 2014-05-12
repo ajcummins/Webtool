@@ -13,11 +13,19 @@ import edu.ycp.cs482.webtool.model.Project;
 import edu.ycp.cs482.webtool.model.User;
 
 public class DerbyDatabase implements IDatabase {
+	/**
+	 * Path where we should look for the database.
+	 * FIXME: this is public so that the single-jarfile startup
+	 * code can change this path to where the deployed database
+	 * is located.
+	 */
+	public static String DATABASE_PATH = "C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-Persistence/test.db";
+	
 	static {
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
 		} catch (Exception e) {
-			throw new IllegalStateException("Could not load sqlite driver");
+			throw new IllegalStateException("Could not load Derby driver", e);
 		}
 	}
 	
@@ -72,7 +80,8 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/AJC/git/482-Webtool-Repository/CS482-Webtool-Persistence/test.db;create=true"); //Josh
+		System.out.println("Connecting to database " + DATABASE_PATH);
+		Connection conn = DriverManager.getConnection("jdbc:derby:" + DATABASE_PATH + ";create=true"); //Josh
 		//Connection conn = DriverManager.getConnection("jdbc:derby:PATH HERE/test.db;create=true"); //Anthony 
 		
 		// Set autocommit to false to allow multiple the execution of
@@ -275,6 +284,7 @@ public class DerbyDatabase implements IDatabase {
 				}
 				catch(Exception e)
 				{
+					e.printStackTrace();
 					return null;
 				}
 				finally

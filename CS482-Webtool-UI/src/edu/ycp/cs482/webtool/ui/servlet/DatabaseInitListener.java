@@ -1,24 +1,27 @@
 package edu.ycp.cs482.webtool.ui.servlet;
 
-import java.io.IOException;
+import java.io.File;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs482.webtool.persistence.DatabaseProvider;
 import edu.ycp.cs482.webtool.persistence.DerbyDatabase;
-import edu.ycp.cs482.webtool.persistence.FakeDatabase;
 
 
 public class DatabaseInitListener implements ServletContextListener{
 	
 	@Override
 	public void contextInitialized(ServletContextEvent e) {
+
+		// FIXME: huge hack - if /home/josh/test.db exists, assume that
+		// it is where the database files are located.
+		File file = new File("/home/josh/test.db");
+		if (file.exists()) {
+			DerbyDatabase.DATABASE_PATH = "/home/josh/test.db";
+		}
+		
 		// Webapp is starting
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		System.out.println("Initialized database!");
