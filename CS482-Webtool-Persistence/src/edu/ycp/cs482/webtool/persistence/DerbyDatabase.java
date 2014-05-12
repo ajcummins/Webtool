@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ycp.cs482.webtool.model.Project;
 import edu.ycp.cs482.webtool.model.User;
 
 public class DerbyDatabase implements IDatabase {
@@ -279,7 +280,19 @@ public class DerbyDatabase implements IDatabase {
 		
 	}
 
-	
+	@Override
+	public List<Project> getMyProjectList(User inUser)
+	{
+		return null;
+	}
+
+	List<Project> projects = new ArrayList<Project>();
+
+	@Override
+	public Project getProjectByName(String inProjectName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	// Utility methods
 	

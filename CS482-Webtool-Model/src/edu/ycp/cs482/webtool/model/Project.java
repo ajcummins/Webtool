@@ -8,12 +8,15 @@ public class Project
 {
 	private int projectID;
 	private String projectName;
-	private ArrayList<Integer> pageIDList;
+	private String projectDesc;
+	// Can't represent this in a database with finite limitations... have to use a registry
+	//private ArrayList<Integer> pageIDList;
 	
-	public Project(String inProjectName)
+	public Project(String inProjectName, String inProjectDescription)
 	{
 		projectName = inProjectName;
-		setPageIDList(new ArrayList<Integer>());
+		projectDesc = inProjectDescription;
+		//setPageIDList(new ArrayList<Integer>());
 	}
 	
 	public int getProjectID() {
@@ -32,6 +35,15 @@ public class Project
 		this.projectName = projectName;
 	}
 
+	public String getProjectDesc() {
+		return projectDesc;
+	}
+
+	public void setProjectDesc(String projectDesc) {
+		this.projectDesc = projectDesc;
+	}
+
+	/*
 	public ArrayList<Integer> getPageIDList() {
 		return pageIDList;
 	}
@@ -55,6 +67,7 @@ public class Project
 			}
 		}
 	}
+	*/
 	
 	
 	
